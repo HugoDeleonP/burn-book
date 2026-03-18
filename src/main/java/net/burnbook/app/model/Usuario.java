@@ -38,6 +38,9 @@ public class Usuario {
     @Column (nullable = false)
     private String CPF;
 
+    @Column(name = "foto_perfil_url")
+    private String fotoPerfilUrl;
+
     public Usuario(String username, String nome, LocalDate dataNascimento, String email, String senha, String CPF) {
         this.username = username;
         this.nome = nome;
