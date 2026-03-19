@@ -30,4 +30,8 @@ public class Curtida {
         this.publicacao = publicacao;
         this.usuario = usuario;
     }
+
+    public Curtida(Publicacao publicacao) {
+        this.publicacao = publicacao;
+    }
 }

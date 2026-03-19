@@ -42,12 +42,9 @@ public class Publicacao {
     @OneToMany(mappedBy = "publicacao", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comentario> comentarios = new ArrayList<>();
 
-    public Publicacao(Usuario autor, String conteudo, Categoria categoria, Boolean isAnonimo, LocalDateTime dataHora) {
-        this.autor = autor;
+    public Publicacao(String conteudo, Categoria categoria, Boolean isAnonimo) {
         this.conteudo = conteudo;
         this.categoria = categoria;
         this.isAnonimo = isAnonimo;
-        this.dataHora = dataHora;
     }
-
 }
