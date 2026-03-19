@@ -43,7 +43,9 @@ public class Comentario {
         this.conteudo = conteudo;
     }
 
-
-
-
+    public Comentario(Publicacao publicacao, Comentario comentarioPai, String conteudo) {
+        this.publicacao = publicacao;
+        this.comentarioPai = comentarioPai;
+        this.conteudo = conteudo;
+    }
 }
