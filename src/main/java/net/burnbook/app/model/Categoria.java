@@ -21,5 +21,7 @@ public class Categoria {
     @Column(nullable = false)
     private String nome;
 
-
+    public Categoria(String nome) {
+        this.nome = nome;
+    }
 }

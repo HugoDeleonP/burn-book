@@ -41,20 +41,13 @@ public class Usuario {
     @Column(name = "foto_perfil_url")
     private String fotoPerfilUrl;
 
-    public Usuario(String username, String nome, LocalDate dataNascimento, String email, String senha, String CPF) {
+    public Usuario(String username, String nome, LocalDate dataNascimento, String email, String senha, String CPF, String fotoPerfilUrl) {
         this.username = username;
         this.nome = nome;
         this.dataNascimento = dataNascimento;
         this.email = email;
         this.senha = senha;
         this.CPF = CPF;
-    }
-
-    public Usuario(Long id, String username, String nome, LocalDate dataNascimento, String email) {
-        this.id = id;
-        this.username = username;
-        this.nome = nome;
-        this.dataNascimento = dataNascimento;
-        this.email = email;
+        this.fotoPerfilUrl = fotoPerfilUrl;
     }
 }
