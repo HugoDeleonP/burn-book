@@ -7,15 +7,14 @@ import jakarta.validation.constraints.Positive;
 
 public record ComentarioDTORequest(
 
-        @Positive
-        @NotNull
+        @Positive(message = "O ID da publicação deve ser positiva")
+        @NotNull(message = "O ID da publicação não pode ser nulo")
         Long publicacaoId,
 
-        @Positive
-        @NotNull
+        @Positive(message = "O ID do comentario pai deve ser positivo")
         Long comentarioPaiId,
 
-        @NotBlank
+        @NotBlank(message = "O conteúdo não deve ser vazio")
         @Max(value = 300)
         String conteudo
 
