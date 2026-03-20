@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 public record CategoriaDTORequest(
-        @NotBlank
+        @NotBlank(message = "O nome não pode ser vazio")
         String nome
 ) {
 }

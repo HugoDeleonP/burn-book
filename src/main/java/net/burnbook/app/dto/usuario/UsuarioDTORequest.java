@@ -1,34 +1,32 @@
 package net.burnbook.app.dto.usuario;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.*;
 import org.hibernate.validator.constraints.br.CPF;
 
 import java.time.LocalDate;
 
 public record UsuarioDTORequest(
 
-        @NotBlank
+        @NotBlank(message = "O username não pode ser vazio")
         String username,
 
-        @NotBlank
+        @NotBlank(message = "O nome não pode ser nulo")
         String nome,
 
-        @NotNull
-        @Past
+        @NotNull(message = "A data de nascimento não pode ser nula")
+        @Past(message = "A data de nascimento deve ser válida")
         LocalDate dataNascimento,
 
-        @NotBlank
-        @Email
+        @NotBlank(message = "O Email não pode ser vazio")
+        @Email(message = "O formato de Email deve ser válido")
         String email,
 
-        @NotBlank
+        @NotBlank(message = "A senha não pode ser vazia")
+        @Min(value = 8)
         String senha,
 
-        @NotBlank
-        @CPF
+        @NotBlank(message = "O CPF não pode ser vazio")
+        @CPF(message = "O CPF deve ser válido")
         String CPF,
 
         String fotoPerfilUrl
