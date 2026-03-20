@@ -5,8 +5,8 @@ import jakarta.validation.constraints.Positive;
 
 public record CurtidaDTORequest(
 
-        @Positive
-        @NotNull
+        @Positive(message = "O ID da publicação deve ser positiva")
+        @NotNull(message = "O ID da publicação não pode ser nulo")
         Long publicacaoId
 ) {
 }
