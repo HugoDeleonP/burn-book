@@ -48,4 +48,7 @@ public class Comentario {
         this.comentarioPai = comentarioPai;
         this.conteudo = conteudo;
     }
+
+
+
 }
