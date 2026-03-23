@@ -1,5 +1,6 @@
 package net.burnbook.app.repository;
 
+import net.burnbook.app.model.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
