@@ -39,9 +39,6 @@ public class Publicacao {
     @Column(nullable = false)
     private LocalDateTime dataHora;
 
-    @OneToMany(mappedBy = "publicacao", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Comentario> comentarios = new ArrayList<>();
-
     public Publicacao(String conteudo, Categoria categoria, Boolean isAnonimo) {
         this.conteudo = conteudo;
         this.categoria = categoria;
