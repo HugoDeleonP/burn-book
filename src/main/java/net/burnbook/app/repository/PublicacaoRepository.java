@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface PublicacaoRepository extends JpaRepository<Publicacao, Integer> {
+public interface PublicacaoRepository extends JpaRepository<Publicacao, Long> {
 
     Page<Publicacao> findAllByOrderByDataHoraDesc(Pageable pageable);
 
