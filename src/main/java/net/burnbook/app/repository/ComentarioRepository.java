@@ -12,7 +12,7 @@ import java.awt.print.Pageable;
 import java.util.List;
 
 @Repository
-public interface ComentarioRepository extends JpaRepository <Comentario, Integer> {
+public interface ComentarioRepository extends JpaRepository <Comentario, Long> {
 
     Page<Comentario>
     findByPublicacaoAndComentarioPaiIsNullOrderByDataHoraDesc(Publicacao publicacao, Pageable pageable);
