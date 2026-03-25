@@ -22,7 +22,7 @@ public record UsuarioDTORequest(
         String email,
 
         @NotBlank(message = "A senha não pode ser vazia")
-        @Min(value = 8)
+        @Size(min = 8, message = "A senha deve ter no mínimo 8 caracteres")
         String senha,
 
         @NotBlank(message = "O CPF não pode ser vazio")
