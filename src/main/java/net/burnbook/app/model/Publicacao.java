@@ -44,4 +44,12 @@ public class Publicacao {
         this.categoria = categoria;
         this.isAnonimo = isAnonimo;
     }
+
+    public Publicacao(Usuario autor, String conteudo, Categoria categoria, Boolean isAnonimo, LocalDateTime dataHora) {
+        this.autor = autor;
+        this.conteudo = conteudo;
+        this.categoria = categoria;
+        this.isAnonimo = isAnonimo;
+        this.dataHora = dataHora;
+    }
 }
