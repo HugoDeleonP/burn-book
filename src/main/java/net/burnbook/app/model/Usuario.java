@@ -36,18 +36,18 @@ public class Usuario {
     private String senha;
 
     @Column (nullable = false)
-    private String CPF;
+    private String cpf;
 
     @Column(name = "foto_perfil_url")
     private String fotoPerfilUrl;
 
-    public Usuario(String username, String nome, LocalDate dataNascimento, String email, String senha, String CPF, String fotoPerfilUrl) {
+    public Usuario(String username, String nome, LocalDate dataNascimento, String email, String senha, String cpf, String fotoPerfilUrl) {
         this.username = username;
         this.nome = nome;
         this.dataNascimento = dataNascimento;
         this.email = email;
         this.senha = senha;
-        this.CPF = CPF;
+        this.cpf = cpf;
         this.fotoPerfilUrl = fotoPerfilUrl;
     }
 }
