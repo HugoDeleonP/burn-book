@@ -1,6 +1,8 @@
 package net.burnbook.app.dto.usuario;
 
 import jakarta.validation.constraints.*;
+import org.hibernate.validator.constraints.br.CPF;
+
 import java.time.LocalDate;
 
 public record UsuarioDTORequest(
