@@ -1,9 +1,6 @@
 package net.burnbook.app.dto.comentario;
 
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.*;
 
 public record ComentarioDTORequest(
 
@@ -15,7 +12,7 @@ public record ComentarioDTORequest(
         Long comentarioPaiId,
 
         @NotBlank(message = "O conteúdo não deve ser vazio")
-        @Max(value = 300)
+        @Size(max = 250, message = "O conteúdo deve ter no máximo 250 caracteres")
         String conteudo
 
 ) {

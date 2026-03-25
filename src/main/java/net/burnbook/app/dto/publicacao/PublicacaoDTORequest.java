@@ -1,15 +1,12 @@
 package net.burnbook.app.dto.publicacao;
 
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.*;
 
 public record PublicacaoDTORequest(
 
 
         @NotBlank(message = "O conteúdo não deve ser vazio")
-        @Max(value = 300)
+        @Size(max = 250, message = "O conteúdo deve ter no máximo 250 caracteres")
         String conteudo,
 
         @Positive(message = "O ID da categoria deve ser positiva")
