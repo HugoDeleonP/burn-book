@@ -28,7 +28,8 @@ public class Comentario {
     @JoinColumn(name = "autor_id")
     private Usuario autor;
 
-    @Column
+    @ManyToOne
+    @JoinColumn(name = "comentario_id")
     private Comentario comentarioPai;
 
     @Column(nullable = false)

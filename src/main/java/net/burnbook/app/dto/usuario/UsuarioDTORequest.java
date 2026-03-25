@@ -27,7 +27,7 @@ public record UsuarioDTORequest(
 
         @NotBlank(message = "O CPF não pode ser vazio")
         @CPF(message = "O CPF deve ser válido")
-        String CPF,
+        String cpf,
 
         String fotoPerfilUrl
 ) {
