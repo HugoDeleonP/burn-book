@@ -2,6 +2,7 @@ package net.burnbook.app.controller;
 
 import net.burnbook.app.dto.publicacao.PublicacaoDTOResponse;
 import net.burnbook.app.model.Usuario;
+import net.burnbook.app.repository.UsuarioRepository;
 import net.burnbook.app.service.FeedService;
 import net.burnbook.app.service.PublicacaoService;
 import org.springframework.data.domain.Page;
@@ -17,15 +18,17 @@ import java.time.LocalDate;
 public class FeedController {
 
     private final FeedService service;
-    public FeedController (FeedService service) {
+    private final UsuarioRepository usuarioRepository;
+    public FeedController (FeedService service, UsuarioRepository usuarioRepository) {
         this.service = service;
+        this.usuarioRepository = usuarioRepository;
     }
 
     @GetMapping("") //
     public Page<PublicacaoDTOResponse> listarPublicacoesFeed (Pageable pageable) {
-        Usuario logado = new Usuario("teste_1", "teste", LocalDate.of(2000,12,12), "teste@gmail.com", "123", "123.123.123-21", "url.com");
+        Usuario usuarioMockado = usuarioRepository.getById(100L);
 
-        return service.listaFeedPrincipal(pageable, logado);
+        return service.listaFeedPrincipal(pageable, usuarioMockado);
     }
 
 }

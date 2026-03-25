@@ -3,6 +3,7 @@ package net.burnbook.app.controller;
 import net.burnbook.app.dto.comentario.ComentarioDTORequest;
 import net.burnbook.app.dto.comentario.ComentarioDTOResponse;
 import net.burnbook.app.model.Usuario;
+import net.burnbook.app.repository.UsuarioRepository;
 import net.burnbook.app.service.CategoriaService;
 import net.burnbook.app.service.ComentarioService;
 import org.hibernate.query.Page;
@@ -15,22 +16,25 @@ import java.time.LocalDate;
 public class ComentarioController {
 
     private final ComentarioService service;
-    public ComentarioController (ComentarioService service) {
+    private final UsuarioRepository usuarioRepository;
+
+    public ComentarioController (ComentarioService service, UsuarioRepository usuarioRepository) {
         this.service = service;
+        this.usuarioRepository = usuarioRepository;
     }
 
     @PostMapping("")
     public ComentarioDTOResponse adicionarComentario (@RequestBody ComentarioDTORequest comentario) {
-        Usuario logado = new Usuario("teste_1", "teste", LocalDate.of(2000,12,12), "teste@gmail.com", "123", "123.123.123-21", "url.com");
+        Usuario usuarioMockado = usuarioRepository.getById(100L);
 
-        return service.comentar(comentario, logado);
+        return service.comentar(comentario, usuarioMockado);
     }
 
     @DeleteMapping("/{id}")
     public void deletarComentario (@PathVariable Long id) {
-        Usuario logado = new Usuario("teste_1", "teste", LocalDate.of(2000,12,12), "teste@gmail.com", "123", "123.123.123-21", "url.com");
+        Usuario usuarioMockado = usuarioRepository.getById(4L);
 
-        service.deletar(id, logado);
+        service.deletar(id, usuarioMockado);
     }
 
 //    @GetMapping("/publicacoes/{publicacaoId}/comentarios") // rota correta?

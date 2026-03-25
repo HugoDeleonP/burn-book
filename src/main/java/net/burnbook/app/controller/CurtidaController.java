@@ -3,6 +3,7 @@ package net.burnbook.app.controller;
 import net.burnbook.app.dto.curtida.CurtidaDTORequest;
 import net.burnbook.app.dto.curtida.ResultadoCurtidaDTOResponse;
 import net.burnbook.app.model.Usuario;
+import net.burnbook.app.repository.UsuarioRepository;
 import net.burnbook.app.service.ComentarioService;
 import net.burnbook.app.service.CurtidaService;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,14 +18,17 @@ import java.time.LocalDate;
 public class CurtidaController {
 
     private final CurtidaService service;
-    public CurtidaController (CurtidaService service) {
+    private final UsuarioRepository usuarioRepository;
+
+    public CurtidaController (CurtidaService service, UsuarioRepository usuarioRepository) {
         this.service = service;
+        this.usuarioRepository = usuarioRepository;
     }
 
     @PostMapping("")
     public ResultadoCurtidaDTOResponse adicionarCurtidaPubli (@RequestBody CurtidaDTORequest curtida) {
-        Usuario logado = new Usuario("teste_1", "teste", LocalDate.of(2000,12,12), "teste@gmail.com", "123", "123.123.123-21", "url.com");
+        Usuario usuarioMockado = usuarioRepository.getById(100L);
 
-        return service.darOuTirarCurtida(curtida, logado);
+        return service.darOuTirarCurtida(curtida, usuarioMockado);
     }
 }
