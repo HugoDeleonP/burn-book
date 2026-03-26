@@ -14,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -34,17 +35,17 @@ public class PublicacaoController {
     }
 
     @PostMapping("")
-    public PublicacaoDTOResponse criarPublicacao (@RequestBody PublicacaoDTORequest publicacao) {
+    public ResponseEntity<PublicacaoDTOResponse> criarPublicacao (@RequestBody PublicacaoDTORequest publicacao) {
         Usuario usuarioMockado = usuarioRepository.getById(1L);
 
-        return service.criar(publicacao, usuarioMockado);
+        return ResponseEntity.ok(service.criar(publicacao, usuarioMockado));
     }
 
     @PutMapping("/{id}")
-    public PublicacaoDTOResponse atualizarPublicacao (@PathVariable Long id, @RequestBody PublicacaoDTORequest publicacaoDTORequest) {
+    public ResponseEntity<PublicacaoDTOResponse> atualizarPublicacao (@PathVariable Long id, @RequestBody PublicacaoDTORequest publicacaoDTORequest) {
         Usuario usuarioMockado = usuarioRepository.getById(1L);
 
-        return service.atualizar(id, publicacaoDTORequest, usuarioMockado);
+        return ResponseEntity.ok(service.atualizar(id, publicacaoDTORequest, usuarioMockado));
     }
 
     @DeleteMapping("/{id}")
@@ -52,15 +53,17 @@ public class PublicacaoController {
         Usuario usuarioMockado = usuarioRepository.getById(1L);
 
         service.deletar(id, usuarioMockado);
+
+        ResponseEntity.ok("Removido com sucesso");
     }
 
    @GetMapping("/{publicacaoId}/comentarios")
-   public Page<ComentarioDTOResponse> listarComentariosPai (
+   public ResponseEntity<Page<ComentarioDTOResponse>> listarComentariosPai (
            @PathVariable Long publicacaoId,
            @RequestParam Integer page,
            @RequestParam Integer size
    ) {
-        return comentarioService.listarComentariosRaizDaPublicacao(publicacaoId, PageRequest.of(page, size));
+        return ResponseEntity.ok(comentarioService.listarComentariosRaizDaPublicacao(publicacaoId, PageRequest.of(page, size)));
     }
 
 }

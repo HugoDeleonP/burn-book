@@ -13,6 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -31,27 +32,30 @@ public class UsuarioController {
     }
 
     @PostMapping("")
-    public UsuarioDTOResponse cadastrarUsuario (@RequestBody UsuarioDTORequest user) {
-        return service.cadastrar(user);
+    public ResponseEntity<UsuarioDTOResponse> cadastrarUsuario (@RequestBody UsuarioDTORequest user) {
+        return ResponseEntity.ok(service.cadastrar(user));
     }
 
     @GetMapping("/{id}")
-    public UsuarioDTOResponse listarUsuario (@PathVariable Long id) {
-        return service.buscarPefilPorId(id);
+    public ResponseEntity<UsuarioDTOResponse> listarUsuario (@PathVariable Long id) {
+        return ResponseEntity.ok(service.buscarPefilPorId(id));
     }
 
     @PatchMapping("/foto")
-    public UsuarioDTOResponse atualizarFotoPerfil (@PathVariable Long id, String fotoUrl) {
-        return service.adicionarFotoPerfil(id, fotoUrl);
+    public ResponseEntity<UsuarioDTOResponse> atualizarFotoPerfil (@PathVariable Long id, String fotoUrl) {
+        return ResponseEntity.ok(service.adicionarFotoPerfil(id, fotoUrl));
     }
 
     @GetMapping("/{usuarioId}/publicacoes")
-    public Page<PublicacaoDTOResponse> listarPublicacoesUser (
+    public ResponseEntity<Page<PublicacaoDTOResponse>> listarPublicacoesUser (
             @PathVariable Long usuarioId,
             @RequestParam Integer page,
             @RequestParam Integer size
             ) {
         Usuario usuarioMockado = usuarioRepository.getById(1L);
-        return publicacaoService.listarPorUsuario(usuarioId, PageRequest.of(page, size), usuarioMockado);
+
+        return ResponseEntity.ok(publicacaoService.listarPorUsuario(usuarioId,
+                PageRequest.of(page, size),
+                usuarioMockado));
     }
 }

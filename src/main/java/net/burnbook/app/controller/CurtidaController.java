@@ -6,6 +6,7 @@ import net.burnbook.app.model.Usuario;
 import net.burnbook.app.repository.UsuarioRepository;
 import net.burnbook.app.service.ComentarioService;
 import net.burnbook.app.service.CurtidaService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,9 +27,9 @@ public class CurtidaController {
     }
 
     @PostMapping("")
-    public ResultadoCurtidaDTOResponse adicionarCurtidaPubli (@RequestBody CurtidaDTORequest curtida) {
+    public ResponseEntity<ResultadoCurtidaDTOResponse> adicionarCurtidaPubli (@RequestBody CurtidaDTORequest curtida) {
         Usuario usuarioMockado = usuarioRepository.getById(1L);
 
-        return service.darOuTirarCurtida(curtida, usuarioMockado);
+        return ResponseEntity.ok(service.darOuTirarCurtida(curtida, usuarioMockado));
     }
 }
