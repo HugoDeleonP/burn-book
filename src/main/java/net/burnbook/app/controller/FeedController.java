@@ -26,7 +26,7 @@ public class FeedController {
 
     @GetMapping("") //
     public Page<PublicacaoDTOResponse> listarPublicacoesFeed (Pageable pageable) {
-        Usuario usuarioMockado = usuarioRepository.getById(100L);
+        Usuario usuarioMockado = usuarioRepository.getById(1L);
 
         return service.listaFeedPrincipal(pageable, usuarioMockado);
     }

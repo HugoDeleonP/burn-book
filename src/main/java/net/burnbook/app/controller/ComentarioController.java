@@ -25,14 +25,14 @@ public class ComentarioController {
 
     @PostMapping("")
     public ComentarioDTOResponse adicionarComentario (@RequestBody ComentarioDTORequest comentario) {
-        Usuario usuarioMockado = usuarioRepository.getById(100L);
+        Usuario usuarioMockado = usuarioRepository.getById(2L);
 
         return service.comentar(comentario, usuarioMockado);
     }
 
     @DeleteMapping("/{id}")
     public void deletarComentario (@PathVariable Long id) {
-        Usuario usuarioMockado = usuarioRepository.getById(4L);
+        Usuario usuarioMockado = usuarioRepository.getById(1L);
 
         service.deletar(id, usuarioMockado);
     }

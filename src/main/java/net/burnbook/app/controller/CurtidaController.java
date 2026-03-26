@@ -27,7 +27,7 @@ public class CurtidaController {
 
     @PostMapping("")
     public ResultadoCurtidaDTOResponse adicionarCurtidaPubli (@RequestBody CurtidaDTORequest curtida) {
-        Usuario usuarioMockado = usuarioRepository.getById(100L);
+        Usuario usuarioMockado = usuarioRepository.getById(1L);
 
         return service.darOuTirarCurtida(curtida, usuarioMockado);
     }

@@ -34,21 +34,21 @@ public class PublicacaoController {
 
     @PostMapping("")
     public PublicacaoDTOResponse criarPublicacao (@RequestBody PublicacaoDTORequest publicacao) {
-        Usuario usuarioMockado = usuarioRepository.getById(100L);
+        Usuario usuarioMockado = usuarioRepository.getById(1L);
 
         return service.criar(publicacao, usuarioMockado);
     }
 
     @PutMapping("/{id}")
     public PublicacaoDTOResponse atualizarPublicacao (@PathVariable Long id, @RequestBody PublicacaoDTORequest publicacaoDTORequest) {
-        Usuario usuarioMockado = usuarioRepository.getById(100L);
+        Usuario usuarioMockado = usuarioRepository.getById(1L);
 
         return service.atualizar(id, publicacaoDTORequest, usuarioMockado);
     }
 
     @DeleteMapping("/{id}")
     public void deletarPublicacao (@PathVariable Long id) {
-        Usuario usuarioMockado = usuarioRepository.getById(100L);
+        Usuario usuarioMockado = usuarioRepository.getById(1L);
 
         service.deletar(id, usuarioMockado);
     }

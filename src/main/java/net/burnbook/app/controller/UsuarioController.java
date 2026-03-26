@@ -50,7 +50,7 @@ public class UsuarioController {
             @PageableDefault(size = 10, sort = "dataHora", direction = Sort.Direction.DESC) Pageable pageable
 
             ) {
-        Usuario usuarioMockado = usuarioRepository.getById(100L);
+        Usuario usuarioMockado = usuarioRepository.getById(1L);
         return publicacaoService.listarPorUsuario(usuarioId, pageable, usuarioMockado);
     }
 }
