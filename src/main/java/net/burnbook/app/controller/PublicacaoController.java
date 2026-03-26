@@ -10,6 +10,7 @@ import net.burnbook.app.service.ComentarioService;
 import net.burnbook.app.service.PublicacaoService;
 import net.burnbook.app.service.UsuarioService;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -56,9 +57,10 @@ public class PublicacaoController {
    @GetMapping("/{publicacaoId}/comentarios")
    public Page<ComentarioDTOResponse> listarComentariosPai (
            @PathVariable Long publicacaoId,
-           @PageableDefault(size = 10, sort = "dataHora", direction = Sort.Direction.DESC) Pageable pageable
-           ) {
-        return comentarioService.listarComentariosRaizDaPublicacao(publicacaoId, pageable);
+           @RequestParam Integer page,
+           @RequestParam Integer size
+   ) {
+        return comentarioService.listarComentariosRaizDaPublicacao(publicacaoId, PageRequest.of(page, size));
     }
 
 }

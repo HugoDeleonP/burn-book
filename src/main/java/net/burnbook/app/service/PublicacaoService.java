@@ -90,7 +90,7 @@ public class PublicacaoService {
         Usuario usuarioBuscado = usuarioRepository.findById(usuarioId)
                 .orElseThrow( () -> new RuntimeException("Categoria não encontrada"));
 
-        Page<Publicacao> paginaPublicacoesPorAutor = publicacaoRepository.findByAutorOrderByDataHoraDesc(logado, pageable);
+        Page<Publicacao> paginaPublicacoesPorAutor = publicacaoRepository.findByAutorOrderByDataHoraDesc(usuarioBuscado, pageable);
 
         return paginaPublicacoesPorAutor.map( publicacao -> new PublicacaoDTOResponse(
                 publicacao.getId(),

@@ -9,6 +9,7 @@ import net.burnbook.app.service.CategoriaService;
 import net.burnbook.app.service.PublicacaoService;
 import net.burnbook.app.service.UsuarioService;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -47,10 +48,10 @@ public class UsuarioController {
     @GetMapping("/{usuarioId}/publicacoes")
     public Page<PublicacaoDTOResponse> listarPublicacoesUser (
             @PathVariable Long usuarioId,
-            @PageableDefault(size = 10, sort = "dataHora", direction = Sort.Direction.DESC) Pageable pageable
-
+            @RequestParam Integer page,
+            @RequestParam Integer size
             ) {
         Usuario usuarioMockado = usuarioRepository.getById(1L);
-        return publicacaoService.listarPorUsuario(usuarioId, pageable, usuarioMockado);
+        return publicacaoService.listarPorUsuario(usuarioId, PageRequest.of(page, size), usuarioMockado);
     }
 }
