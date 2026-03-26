@@ -19,7 +19,7 @@ public interface ComentarioRepository extends JpaRepository <Comentario, Long> {
 
     List<Comentario> findByComentarioPaiOrderByDataHoraAsc(Comentario comentarioPai);
 
-    @Query("SELECT c FROM Comentario c " + "JOIN FETCH c.autor " + "LEFT JOIN FETCH c.comentarioPai " + "WHERE c.publicacao.id = :publicacaoId " + "ORDER BY c.dataHora DESC")
+    @Query("SELECT c FROM Comentario c " + "JOIN FETCH c.autor " + "LEFT JOIN FETCH c.comentarioPai " + "WHERE c.publicacao.id = :publicacaoId AND c.comentarioPai IS NULL " + "ORDER BY c.dataHora DESC")
     Page<Comentario> buscarComentariosDaPublicacao(@Param("publicacaoId") Long publicacaoId, Pageable pageable);
 
 
