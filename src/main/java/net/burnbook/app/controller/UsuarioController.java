@@ -1,6 +1,7 @@
 package net.burnbook.app.controller;
 
 import net.burnbook.app.dto.publicacao.PublicacaoDTOResponse;
+import jakarta.validation.Valid;
 import net.burnbook.app.dto.usuario.UsuarioDTORequest;
 import net.burnbook.app.dto.usuario.UsuarioDTOResponse;
 import net.burnbook.app.model.Usuario;
@@ -32,7 +33,7 @@ public class UsuarioController {
     }
 
     @PostMapping("")
-    public ResponseEntity<UsuarioDTOResponse> cadastrarUsuario (@RequestBody UsuarioDTORequest user) {
+    public ResponseEntity<UsuarioDTOResponse> cadastrarUsuario (@Valid @RequestBody UsuarioDTORequest user) {
         return ResponseEntity.ok(service.cadastrar(user));
     }
 
