@@ -7,6 +7,7 @@ import net.burnbook.app.repository.UsuarioRepository;
 import net.burnbook.app.service.CategoriaService;
 import net.burnbook.app.service.ComentarioService;
 import org.hibernate.query.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -24,21 +25,18 @@ public class ComentarioController {
     }
 
     @PostMapping("")
-    public ComentarioDTOResponse adicionarComentario (@RequestBody ComentarioDTORequest comentario) {
-        Usuario usuarioMockado = usuarioRepository.getById(100L);
+    public ResponseEntity<ComentarioDTOResponse> adicionarComentario (@RequestBody ComentarioDTORequest comentario) {
+        Usuario usuarioMockado = usuarioRepository.getById(2L);
 
-        return service.comentar(comentario, usuarioMockado);
+        return ResponseEntity.ok(service.comentar(comentario, usuarioMockado));
     }
 
     @DeleteMapping("/{id}")
     public void deletarComentario (@PathVariable Long id) {
-        Usuario usuarioMockado = usuarioRepository.getById(4L);
+        Usuario usuarioMockado = usuarioRepository.getById(1L);
 
         service.deletar(id, usuarioMockado);
+        ResponseEntity.ok("Removido com sucesso");
     }
 
-//    @GetMapping("/publicacoes/{publicacaoId}/comentarios") // rota correta?
-//   public Page<ComentarioDTOResponse> listarComentarios () {
-//        return service
-//    }
 }

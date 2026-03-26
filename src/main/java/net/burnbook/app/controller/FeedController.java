@@ -6,9 +6,12 @@ import net.burnbook.app.repository.UsuarioRepository;
 import net.burnbook.app.service.FeedService;
 import net.burnbook.app.service.PublicacaoService;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
@@ -25,10 +28,12 @@ public class FeedController {
     }
 
     @GetMapping("") //
-    public Page<PublicacaoDTOResponse> listarPublicacoesFeed (Pageable pageable) {
-        Usuario usuarioMockado = usuarioRepository.getById(100L);
+    public ResponseEntity<Page<PublicacaoDTOResponse>> listarPublicacoesFeed (@RequestParam Integer page, @RequestParam Integer size) {
+        Usuario usuarioMockado = usuarioRepository.getById(1L);
 
-        return service.listaFeedPrincipal(pageable, usuarioMockado);
+        Pageable pageable = PageRequest.of(page, size);
+
+        return ResponseEntity.ok(service.listaFeedPrincipal(pageable, usuarioMockado));
     }
 
 }

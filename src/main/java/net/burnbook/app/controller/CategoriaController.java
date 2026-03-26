@@ -2,6 +2,7 @@ package net.burnbook.app.controller;
 
 import net.burnbook.app.dto.categoria.CategoriaDTOResponse;
 import net.burnbook.app.service.CategoriaService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +20,7 @@ public class CategoriaController {
     }
 
     @GetMapping("")
-    public List<CategoriaDTOResponse> listarCategorias () {
-        return service.listarTodas();
+    public ResponseEntity<List<CategoriaDTOResponse>> listarCategorias () {
+        return ResponseEntity.ok(service.listarTodas());
     }
 }
