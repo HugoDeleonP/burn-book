@@ -8,9 +8,12 @@ import net.burnbook.app.model.Publicacao;
 import net.burnbook.app.model.Usuario;
 import net.burnbook.app.repository.ComentarioRepository;
 import net.burnbook.app.repository.PublicacaoRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class ComentarioService {
@@ -61,4 +64,25 @@ public class ComentarioService {
 
         comentarioRepository.delete(comentarioBuscado);
     }
+
+    public Page<ComentarioDTOResponse> listarComentariosRaizDaPublicacao(Long publicacaoId, Pageable pageable){
+
+        Page<Comentario> paginaComentarios = comentarioRepository.buscarComentariosDaPublicacao(publicacaoId, pageable);
+
+        return paginaComentarios.map(comentarioMapper::paraDto);
+
+    }
+
+    public List<ComentarioDTOResponse> listarRespostas(Long comentarioPaiId
+    ){
+        Comentario comentarioPaiBuscado = comentarioRepository.findById(comentarioPaiId)
+                .orElseThrow( () -> new RuntimeException("Comentário pai não encontrado."));
+
+        List<Comentario> comentariosFilho = comentarioRepository.findByComentarioPaiOrderByDataHoraAsc(comentarioPaiBuscado);
+
+        return comentariosFilho.stream().map(comentarioMapper::paraDto)
+                .toList();
+    }
+
+
 }
