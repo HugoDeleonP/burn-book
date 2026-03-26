@@ -3,9 +3,15 @@ package net.burnbook.app.controller;
 import net.burnbook.app.dto.publicacao.PublicacaoDTOResponse;
 import net.burnbook.app.dto.usuario.UsuarioDTORequest;
 import net.burnbook.app.dto.usuario.UsuarioDTOResponse;
+import net.burnbook.app.model.Usuario;
+import net.burnbook.app.repository.UsuarioRepository;
 import net.burnbook.app.service.CategoriaService;
+import net.burnbook.app.service.PublicacaoService;
 import net.burnbook.app.service.UsuarioService;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -14,8 +20,13 @@ public class UsuarioController {
 
 
     private final UsuarioService service;
-    public UsuarioController (UsuarioService service) {
+    private final PublicacaoService publicacaoService;
+    private final UsuarioRepository usuarioRepository;
+
+    public UsuarioController (UsuarioService service, PublicacaoService publicacaoService, UsuarioRepository usuarioRepository) {
         this.service = service;
+        this.publicacaoService = publicacaoService;
+        this.usuarioRepository = usuarioRepository;
     }
 
     @PostMapping("")
@@ -33,8 +44,13 @@ public class UsuarioController {
         return service.adicionarFotoPerfil(id, fotoUrl);
     }
 
-//    @GetMapping("/{usuarioId}/publicacoes")
-//    public Page<PublicacaoDTOResponse> listarPublicacoesUser (@PathVariable Long id) {
-//
-//    }
+    @GetMapping("/{usuarioId}/publicacoes")
+    public Page<PublicacaoDTOResponse> listarPublicacoesUser (
+            @PathVariable Long usuarioId,
+            @PageableDefault(size = 10, sort = "dataHora", direction = Sort.Direction.DESC) Pageable pageable
+
+            ) {
+        Usuario usuarioMockado = usuarioRepository.getById(100L);
+        return publicacaoService.listarPorUsuario(usuarioId, pageable, usuarioMockado);
+    }
 }
