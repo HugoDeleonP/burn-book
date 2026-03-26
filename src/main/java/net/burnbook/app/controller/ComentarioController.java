@@ -37,8 +37,5 @@ public class ComentarioController {
         service.deletar(id, usuarioMockado);
     }
 
-//    @GetMapping("/publicacoes/{publicacaoId}/comentarios") // rota correta?
-//   public Page<ComentarioDTOResponse> listarComentarios () {
-//        return service
-//    }
+
 }

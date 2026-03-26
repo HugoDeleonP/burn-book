@@ -1,9 +1,11 @@
 package net.burnbook.app.controller;
 
+import net.burnbook.app.dto.publicacao.PublicacaoDTOResponse;
 import net.burnbook.app.dto.usuario.UsuarioDTORequest;
 import net.burnbook.app.dto.usuario.UsuarioDTOResponse;
 import net.burnbook.app.service.CategoriaService;
 import net.burnbook.app.service.UsuarioService;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -30,4 +32,9 @@ public class UsuarioController {
     public UsuarioDTOResponse atualizarFotoPerfil (@PathVariable Long id, String fotoUrl) {
         return service.adicionarFotoPerfil(id, fotoUrl);
     }
+
+//    @GetMapping("/{usuarioId}/publicacoes")
+//    public Page<PublicacaoDTOResponse> listarPublicacoesUser (@PathVariable Long id) {
+//
+//    }
 }

@@ -43,9 +43,9 @@ public class PublicacaoController {
         service.deletar(id, usuarioMockado);
     }
 
-//   @GetMapping("/{usuarioId}/publicacoes")
-//   public Page<PublicacaoDTOResponse> listarPublicacoesUser (@PathVariable Long id) {
-//
-//   }
+//   @GetMapping("/{publicacaoId}/comentarios")
+//   public Page<ComentarioDTOResponse> listarComentarios () {
+//        return service
+//    }
 
 }
