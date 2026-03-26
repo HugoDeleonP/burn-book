@@ -3,6 +3,7 @@ package net.burnbook.app.service;
 import jakarta.transaction.Transactional;
 import net.burnbook.app.dto.curtida.CurtidaDTORequest;
 import net.burnbook.app.dto.curtida.ResultadoCurtidaDTOResponse;
+import net.burnbook.app.infra.exception.model.EntidadeNaoEncontradaException;
 import net.burnbook.app.model.Curtida;
 import net.burnbook.app.model.Publicacao;
 import net.burnbook.app.model.Usuario;
@@ -26,7 +27,7 @@ public class CurtidaService {
     @Transactional
     public ResultadoCurtidaDTOResponse darOuTirarCurtida(CurtidaDTORequest curtidaDTORequest, Usuario logado){
         Publicacao publicacaoBuscada = publicacaoRepository.findById(curtidaDTORequest.publicacaoId())
-                .orElseThrow( () -> new RuntimeException("Publicação não encontrada"));
+                .orElseThrow( () -> new EntidadeNaoEncontradaException("Publicação não encontrada"));
 
         Optional<Curtida> curtidaExistente = curtidaRepository.findByPublicacaoAndUsuario(publicacaoBuscada, logado);
 

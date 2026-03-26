@@ -2,6 +2,8 @@ package net.burnbook.app.service;
 
 import net.burnbook.app.dto.publicacao.PublicacaoDTORequest;
 import net.burnbook.app.dto.publicacao.PublicacaoDTOResponse;
+import net.burnbook.app.infra.exception.model.AcessoNegadoException;
+import net.burnbook.app.infra.exception.model.EntidadeNaoEncontradaException;
 import net.burnbook.app.mapper.PublicacaoMapper;
 import net.burnbook.app.model.Categoria;
 import net.burnbook.app.model.Publicacao;
@@ -41,7 +43,7 @@ public class PublicacaoService {
     public PublicacaoDTOResponse criar(PublicacaoDTORequest publicacaoDTORequest, Usuario logado){
 
         Categoria categoriaBuscada = categoriaRepository.findById(publicacaoDTORequest.categoriaId())
-                .orElseThrow( () -> new RuntimeException("Categoria não encontrada"));
+                .orElseThrow( () -> new EntidadeNaoEncontradaException("Categoria não encontrada"));
 
         Publicacao publicacao = new Publicacao(
                 logado,
@@ -59,10 +61,10 @@ public class PublicacaoService {
     public PublicacaoDTOResponse atualizar(Long publicacaoId, PublicacaoDTORequest publicacaoDTORequest, Usuario logado){
 
         Publicacao publicacaoBuscada = publicacaoRepository.findById(publicacaoId)
-                .orElseThrow( () -> new RuntimeException("Publicação não encontrada"));
+                .orElseThrow( () -> new EntidadeNaoEncontradaException("Publicação não encontrada"));
 
         if(!publicacaoBuscada.getAutor().getId().equals(logado.getId())){
-            throw new RuntimeException("O usuário não tem permissão de editar publicação de outro");
+            throw new AcessoNegadoException("O usuário não tem permissão de editar publicação de outro");
         }
 
         publicacaoBuscada.setConteudo(publicacaoDTORequest.conteudo());
@@ -76,10 +78,10 @@ public class PublicacaoService {
 
     public void deletar(Long publicacaoId, Usuario logado){
         Publicacao publicacaoBuscada = publicacaoRepository.findById(publicacaoId)
-                .orElseThrow( () -> new RuntimeException("Publicação não encontrada"));
+                .orElseThrow( () -> new EntidadeNaoEncontradaException ("Publicação não encontrada"));
 
         if(!publicacaoBuscada.getAutor().getId().equals(logado.getId())){
-            throw new RuntimeException("O usuário não tem permissão de deletar a publicação de outro");
+            throw new AcessoNegadoException ("O usuário não tem permissão de deletar a publicação de outro");
         }
 
         publicacaoRepository.delete(publicacaoBuscada);
@@ -88,7 +90,7 @@ public class PublicacaoService {
     public Page<PublicacaoDTOResponse> listarPorUsuario(Long usuarioId, Pageable pageable, Usuario logado){
 
         Usuario usuarioBuscado = usuarioRepository.findById(usuarioId)
-                .orElseThrow( () -> new RuntimeException("Categoria não encontrada"));
+                .orElseThrow( () -> new EntidadeNaoEncontradaException("Usuário não encontrada"));
 
         Page<Publicacao> paginaPublicacoesPorAutor = publicacaoRepository.findByAutorOrderByDataHoraDesc(usuarioBuscado, pageable);
 

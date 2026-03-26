@@ -1,5 +1,6 @@
 package net.burnbook.app.controller;
 
+import jakarta.validation.Valid;
 import net.burnbook.app.dto.comentario.ComentarioDTORequest;
 import net.burnbook.app.dto.comentario.ComentarioDTOResponse;
 import net.burnbook.app.model.Usuario;
@@ -25,7 +26,7 @@ public class ComentarioController {
     }
 
     @PostMapping("")
-    public ResponseEntity<ComentarioDTOResponse> adicionarComentario (@RequestBody ComentarioDTORequest comentario) {
+    public ResponseEntity<ComentarioDTOResponse> adicionarComentario (@Valid @RequestBody ComentarioDTORequest comentario) {
         Usuario usuarioMockado = usuarioRepository.getById(2L);
 
         return ResponseEntity.ok(service.comentar(comentario, usuarioMockado));

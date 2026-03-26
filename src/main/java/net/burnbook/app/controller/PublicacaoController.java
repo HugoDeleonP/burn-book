@@ -1,6 +1,7 @@
 package net.burnbook.app.controller;
 
 import net.burnbook.app.dto.comentario.ComentarioDTOResponse;
+import jakarta.validation.Valid;
 import net.burnbook.app.dto.publicacao.PublicacaoDTORequest;
 import net.burnbook.app.dto.publicacao.PublicacaoDTOResponse;
 import net.burnbook.app.model.Comentario;
@@ -35,21 +36,21 @@ public class PublicacaoController {
     }
 
     @PostMapping("")
-    public ResponseEntity<PublicacaoDTOResponse> criarPublicacao (@RequestBody PublicacaoDTORequest publicacao) {
-        Usuario usuarioMockado = usuarioRepository.getById(1L);
+    public ResponseEntity<PublicacaoDTOResponse> criarPublicacao (@Valid @RequestBody PublicacaoDTORequest publicacao) {
+        Usuario usuarioMockado = usuarioRepository.getById(100L);
 
         return ResponseEntity.ok(service.criar(publicacao, usuarioMockado));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PublicacaoDTOResponse> atualizarPublicacao (@PathVariable Long id, @RequestBody PublicacaoDTORequest publicacaoDTORequest) {
+    public ResponseEntity<PublicacaoDTOResponse>  atualizarPublicacao ( @PathVariable Long id, @Valid @RequestBody PublicacaoDTORequest publicacaoDTORequest) {
         Usuario usuarioMockado = usuarioRepository.getById(1L);
 
         return ResponseEntity.ok(service.atualizar(id, publicacaoDTORequest, usuarioMockado));
     }
 
     @DeleteMapping("/{id}")
-    public void deletarPublicacao (@PathVariable Long id) {
+    public void deletarPublicacao ( @PathVariable Long id) {
         Usuario usuarioMockado = usuarioRepository.getById(1L);
 
         service.deletar(id, usuarioMockado);

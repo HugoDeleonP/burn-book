@@ -1,5 +1,6 @@
 package net.burnbook.app.controller;
 
+import jakarta.validation.Valid;
 import net.burnbook.app.dto.curtida.CurtidaDTORequest;
 import net.burnbook.app.dto.curtida.ResultadoCurtidaDTOResponse;
 import net.burnbook.app.model.Usuario;
@@ -27,7 +28,7 @@ public class CurtidaController {
     }
 
     @PostMapping("")
-    public ResponseEntity<ResultadoCurtidaDTOResponse> adicionarCurtidaPubli (@RequestBody CurtidaDTORequest curtida) {
+    public ResponseEntity<ResultadoCurtidaDTOResponse> adicionarCurtidaPubli (@Valid @RequestBody CurtidaDTORequest curtida) {
         Usuario usuarioMockado = usuarioRepository.getById(1L);
 
         return ResponseEntity.ok(service.darOuTirarCurtida(curtida, usuarioMockado));
