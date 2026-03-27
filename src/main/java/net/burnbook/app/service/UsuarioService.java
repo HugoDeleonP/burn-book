@@ -8,6 +8,7 @@ import net.burnbook.app.infra.exception.model.RegraDeNegocioException;
 import net.burnbook.app.mapper.UsuarioMapper;
 import net.burnbook.app.model.Usuario;
 import net.burnbook.app.repository.UsuarioRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -18,10 +19,12 @@ public class UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
     private final UsuarioMapper usuarioMapper;
+    private final PasswordEncoder passwordEncoder;
 
-    public UsuarioService(UsuarioRepository usuarioRepository, UsuarioMapper usuarioMapper){
+    public UsuarioService(UsuarioRepository usuarioRepository, UsuarioMapper usuarioMapper, PasswordEncoder passwordEncoder){
         this.usuarioRepository = usuarioRepository;
         this.usuarioMapper = usuarioMapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public UsuarioDTOResponse cadastrar(UsuarioDTORequest usuarioDto){
@@ -43,6 +46,7 @@ public class UsuarioService {
         }
 
         Usuario usuarioDatabase = usuarioMapper.paraEntidade(usuarioDto);
+        usuarioDatabase.setSenha(passwordEncoder.encode(usuarioDto.senha()));
 
         return usuarioMapper.paraDto(usuarioRepository.save(usuarioDatabase));
     }
