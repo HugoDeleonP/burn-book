@@ -26,13 +26,10 @@ import java.time.LocalDate;
 public class PublicacaoController {
 
     private final PublicacaoService service;
-    private final UsuarioRepository usuarioRepository;
     private final ComentarioService comentarioService;
     public PublicacaoController (PublicacaoService service,
-                                 UsuarioRepository usuarioRepository,
                                  ComentarioService comentarioService) {
         this.service = service;
-        this.usuarioRepository = usuarioRepository;
         this.comentarioService = comentarioService;
     }
 

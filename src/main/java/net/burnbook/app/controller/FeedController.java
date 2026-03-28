@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,19 +22,19 @@ import java.time.LocalDate;
 public class FeedController {
 
     private final FeedService service;
-    private final UsuarioRepository usuarioRepository;
-    public FeedController (FeedService service, UsuarioRepository usuarioRepository) {
+    public FeedController (FeedService service) {
         this.service = service;
-        this.usuarioRepository = usuarioRepository;
     }
 
     @GetMapping("") //
-    public ResponseEntity<Page<PublicacaoDTOResponse>> listarPublicacoesFeed (@RequestParam Integer page, @RequestParam Integer size) {
-        Usuario usuarioMockado = usuarioRepository.getById(1L);
+    public ResponseEntity<Page<PublicacaoDTOResponse>> listarPublicacoesFeed (
+            @RequestParam Integer page, @RequestParam Integer size,
+            @AuthenticationPrincipal(expression = "usuario") Usuario usuarioLogado
+    ) {
 
         Pageable pageable = PageRequest.of(page, size);
 
-        return ResponseEntity.ok(service.listaFeedPrincipal(pageable, usuarioMockado));
+        return ResponseEntity.ok(service.listaFeedPrincipal(pageable, usuarioLogado));
     }
 
 }
