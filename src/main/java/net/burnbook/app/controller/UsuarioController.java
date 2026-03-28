@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -51,12 +52,12 @@ public class UsuarioController {
     public ResponseEntity<Page<PublicacaoDTOResponse>> listarPublicacoesUser (
             @PathVariable Long usuarioId,
             @RequestParam Integer page,
-            @RequestParam Integer size
+            @RequestParam Integer size,
+            @AuthenticationPrincipal(expression = "usuario") Usuario usuarioLogado
             ) {
-        Usuario usuarioMockado = usuarioRepository.getById(1L);
 
         return ResponseEntity.ok(publicacaoService.listarPorUsuario(usuarioId,
                 PageRequest.of(page, size),
-                usuarioMockado));
+                usuarioLogado));
     }
 }
