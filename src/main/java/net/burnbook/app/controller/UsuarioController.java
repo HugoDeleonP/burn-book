@@ -59,4 +59,11 @@ public class UsuarioController {
                 PageRequest.of(page, size),
                 usuarioMockado));
     }
+
+    @GetMapping("/username/{username}")
+    public ResponseEntity<UsuarioDTOResponse> buscarPorUsername(
+            @PathVariable String username) {
+        return ResponseEntity.ok(service.buscarPorUsername(username));
+    }
+
 }
