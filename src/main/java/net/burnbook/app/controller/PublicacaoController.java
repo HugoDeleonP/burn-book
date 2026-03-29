@@ -67,6 +67,6 @@ public class PublicacaoController {
            @RequestParam Integer size
    ) {
         return ResponseEntity.ok(comentarioService.listarComentariosRaizDaPublicacao(publicacaoId, PageRequest.of(page, size)));
-    }
+   }
 
 }
