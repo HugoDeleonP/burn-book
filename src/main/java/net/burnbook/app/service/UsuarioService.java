@@ -1,5 +1,6 @@
 package net.burnbook.app.service;
 
+import net.burnbook.app.dto.usuario.FotoPerfilDTORequest;
 import net.burnbook.app.dto.usuario.UsuarioDTORequest;
 import net.burnbook.app.dto.usuario.UsuarioDTOResponse;
 import net.burnbook.app.infra.exception.model.ConflitoException;
@@ -60,14 +61,14 @@ public class UsuarioService {
         return usuarioMapper.paraDto(usuarioBuscado);
     }
 
-    public UsuarioDTOResponse adicionarFotoPerfil(Long usuarioId, String fotoUrl){
+    public UsuarioDTOResponse adicionarFotoPerfil(Long usuarioId, FotoPerfilDTORequest fotoUrl){
 
         Usuario usuarioBuscado = usuarioRepository.findById(usuarioId)
                 .orElseThrow( () -> new EntidadeNaoEncontradaException("Usuário não encontrado"));
 
-        usuarioBuscado.setFotoPerfilUrl(fotoUrl);
+        usuarioBuscado.setFotoPerfilUrl(fotoUrl.fotoPerfilUrl());
 
-        return usuarioMapper.paraDto(usuarioBuscado);
+        return usuarioMapper.paraDto(usuarioRepository.save(usuarioBuscado));
     }
 
     public UsuarioDTOResponse buscarPorUsername(String username) {
