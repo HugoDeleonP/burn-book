@@ -13,6 +13,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/comentarios")
@@ -39,6 +40,14 @@ public class ComentarioController {
 
         service.deletar(id, usuarioLogado);
         ResponseEntity.ok("Removido com sucesso");
+    }
+
+    @GetMapping("/{comentarioPaiId}/respostas")
+    public ResponseEntity<List<ComentarioDTOResponse>> listarRespostas(
+            @PathVariable Long comentarioPaiId) {
+        return ResponseEntity.ok(
+                service.listarRespostas(comentarioPaiId)
+        );
     }
 
 }
