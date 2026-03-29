@@ -77,4 +77,10 @@ public class UsuarioService {
         return usuarioMapper.paraDto(usuario);
     }
 
+    public UsuarioDTOResponse buscarPorUsername(String username) {
+        Usuario usuario = usuarioRepository.findByUsername(username)
+                .orElseThrow(() -> new EntidadeNaoEncontradaException("Usuário não encontrado"));
+        return usuarioMapper.paraDto(usuario);
+    }
+
 }
