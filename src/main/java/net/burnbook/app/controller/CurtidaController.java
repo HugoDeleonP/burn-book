@@ -8,6 +8,7 @@ import net.burnbook.app.repository.UsuarioRepository;
 import net.burnbook.app.service.ComentarioService;
 import net.burnbook.app.service.CurtidaService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,17 +21,16 @@ import java.time.LocalDate;
 public class CurtidaController {
 
     private final CurtidaService service;
-    private final UsuarioRepository usuarioRepository;
 
-    public CurtidaController (CurtidaService service, UsuarioRepository usuarioRepository) {
+    public CurtidaController (CurtidaService service) {
         this.service = service;
-        this.usuarioRepository = usuarioRepository;
     }
 
     @PostMapping("")
-    public ResponseEntity<ResultadoCurtidaDTOResponse> adicionarCurtidaPubli (@Valid @RequestBody CurtidaDTORequest curtida) {
-        Usuario usuarioMockado = usuarioRepository.getById(1L);
+    public ResponseEntity<ResultadoCurtidaDTOResponse> adicionarCurtidaPubli (
+            @Valid @RequestBody CurtidaDTORequest curtida,
+            @AuthenticationPrincipal(expression = "usuario") Usuario usuarioLogado) {
 
-        return ResponseEntity.ok(service.darOuTirarCurtida(curtida, usuarioMockado));
+        return ResponseEntity.ok(service.darOuTirarCurtida(curtida, usuarioLogado));
     }
 }

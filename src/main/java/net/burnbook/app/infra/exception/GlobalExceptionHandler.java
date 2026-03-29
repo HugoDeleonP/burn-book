@@ -7,6 +7,7 @@ import net.burnbook.app.infra.exception.model.EntidadeNaoEncontradaException;
 import net.burnbook.app.infra.exception.model.RegraDeNegocioException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -45,6 +46,11 @@ public class GlobalExceptionHandler {
                 .map(f -> f.getField() + ": " + f.getDefaultMessage())
                 .collect(Collectors.joining(", "));
         return build(HttpStatus.BAD_REQUEST, "Erro de Validação", mensagem);
+    }
+
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<ErroDTOResponse> handleCredenciaisInvalidas(BadCredentialsException ex) {
+        return build(HttpStatus.UNAUTHORIZED, "Não Autorizado", "Email ou senha inválidos");
     }
 
     private ResponseEntity<ErroDTOResponse> build(HttpStatus status, String erro, String mensagem) {

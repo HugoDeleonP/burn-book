@@ -9,6 +9,7 @@ import net.burnbook.app.service.CategoriaService;
 import net.burnbook.app.service.ComentarioService;
 import org.hibernate.query.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -19,25 +20,25 @@ import java.util.List;
 public class ComentarioController {
 
     private final ComentarioService service;
-    private final UsuarioRepository usuarioRepository;
 
-    public ComentarioController (ComentarioService service, UsuarioRepository usuarioRepository) {
+    public ComentarioController (ComentarioService service) {
         this.service = service;
-        this.usuarioRepository = usuarioRepository;
     }
 
     @PostMapping("")
-    public ResponseEntity<ComentarioDTOResponse> adicionarComentario (@Valid @RequestBody ComentarioDTORequest comentario) {
-        Usuario usuarioMockado = usuarioRepository.getById(2L);
+    public ResponseEntity<ComentarioDTOResponse> adicionarComentario (
+            @Valid @RequestBody ComentarioDTORequest comentario,
+            @AuthenticationPrincipal(expression = "usuario") Usuario usuarioLogado) {
 
-        return ResponseEntity.ok(service.comentar(comentario, usuarioMockado));
+        return ResponseEntity.ok(service.comentar(comentario, usuarioLogado));
     }
 
     @DeleteMapping("/{id}")
-    public void deletarComentario (@PathVariable Long id) {
-        Usuario usuarioMockado = usuarioRepository.getById(1L);
+    public void deletarComentario (
+            @PathVariable Long id,
+            @AuthenticationPrincipal(expression = "usuario") Usuario usuarioLogado) {
 
-        service.deletar(id, usuarioMockado);
+        service.deletar(id, usuarioLogado);
         ResponseEntity.ok("Removido com sucesso");
     }
 
