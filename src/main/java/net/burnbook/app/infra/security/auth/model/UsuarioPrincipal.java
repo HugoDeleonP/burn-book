@@ -15,6 +15,8 @@ public class UsuarioPrincipal implements UserDetails {
 
     private final Usuario usuario;
 
+    public Long getId(){ return usuario.getId();}
+
     public Usuario getUsuario() {
         return usuario;
     }
