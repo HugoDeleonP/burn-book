@@ -45,7 +45,8 @@ public class ComentarioMapper {
                 comentario.getAutor().getNome(),
                 comentarioPai,
                 comentario.getConteudo(),
-                comentario.getDataHora()
+                comentario.getDataHora(),
+                comentario.getPublicacao().getId()
         );
     }
 }

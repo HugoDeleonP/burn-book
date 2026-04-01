@@ -7,7 +7,8 @@ public record ComentarioDTOResponse(
         String autorNome,
         ComentarioPaiResumoResponse comentarioPai,
         String conteudo,
-        LocalDateTime dataHora
+        LocalDateTime dataHora,
+        Long publicacaoId
 
 ) {
 }
