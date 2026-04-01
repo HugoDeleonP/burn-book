@@ -31,7 +31,8 @@ public class PublicacaoMapper {
                 publicacao.getCategoria().getNome(),
                 publicacao.getIsAnonimo(),
                 quantidadeCurtidas,
-                curtidoPorMim
+                curtidoPorMim,
+                publicacao.getDataHora()
         );
     }
 }

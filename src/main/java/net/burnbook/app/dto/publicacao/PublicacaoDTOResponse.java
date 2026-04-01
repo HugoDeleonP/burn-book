@@ -13,6 +13,7 @@ public record PublicacaoDTOResponse(
         String categoriaNome,
         Boolean isAnonimo,
         Integer quantidadeCurtidas,
-        Boolean curtidoPorMim
+        Boolean curtidoPorMim,
+        LocalDateTime dataHora
 ) {
 }

@@ -72,7 +72,7 @@ public class ComentarioService {
         Publicacao publicacaoBuscada = publicacaoRepository.findById(publicacaoId)
                 .orElseThrow( () -> new EntidadeNaoEncontradaException("Publicação não encontrada"));
 
-        Page<Comentario> paginaComentarios = comentarioRepository.buscarComentariosDaPublicacao(publicacaoId, pageable);
+        Page<Comentario> paginaComentarios = comentarioRepository.buscarComentariosDaPublicacao(publicacaoBuscada.getId(), pageable);
 
         return paginaComentarios.map(comentarioMapper::paraDto);
 

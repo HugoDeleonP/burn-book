@@ -101,7 +101,8 @@ public class PublicacaoService {
                 publicacao.getCategoria().getNome(),
                 publicacao.getIsAnonimo(),
                 curtidaRepository.countByPublicacao(publicacao),
-                curtidaRepository.existsByPublicacaoAndUsuario(publicacao, logado)
+                curtidaRepository.existsByPublicacaoAndUsuario(publicacao, logado),
+                publicacao.getDataHora()
         ));
 
     }
@@ -118,7 +119,8 @@ public class PublicacaoService {
                 publicacao.getCategoria().getNome(),
                 publicacao.getIsAnonimo(),
                 curtidaRepository.countByPublicacao(publicacao),
-                false
+                false,
+                publicacao.getDataHora()
         ));
 
     }
