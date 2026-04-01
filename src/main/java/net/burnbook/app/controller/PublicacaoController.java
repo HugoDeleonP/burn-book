@@ -5,6 +5,7 @@ import jakarta.validation.Valid;
 import net.burnbook.app.dto.publicacao.PublicacaoDTORequest;
 import net.burnbook.app.dto.publicacao.PublicacaoDTOResponse;
 import net.burnbook.app.model.Comentario;
+import net.burnbook.app.model.Publicacao;
 import net.burnbook.app.model.Usuario;
 import net.burnbook.app.repository.UsuarioRepository;
 import net.burnbook.app.service.ComentarioService;
@@ -16,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -65,6 +67,10 @@ public class PublicacaoController {
            @RequestParam Integer size
    ) {
         return ResponseEntity.ok(comentarioService.listarComentariosRaizDaPublicacao(publicacaoId, PageRequest.of(page, size)));
-    }
+   }
 
+   @GetMapping("/{id}")
+   public ResponseEntity<PublicacaoDTOResponse> listarPorId(@PathVariable Long id, @AuthenticationPrincipal(expression = "usuario") Usuario logado){
+        return ResponseEntity.ok(service.listarPorId(id, logado));
+   }
 }

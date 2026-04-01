@@ -122,4 +122,16 @@ public class PublicacaoService {
         ));
 
     }
+
+    public PublicacaoDTOResponse listarPorId(Long id, Usuario logado){
+        Publicacao publicacaoBuscada = publicacaoRepository.findById(id)
+                .orElseThrow( () -> new EntidadeNaoEncontradaException("Publicação não encontrada!"));
+
+        return publicacaoMapper.paraDto(
+                publicacaoBuscada,
+                curtidaRepository.countByPublicacao(publicacaoBuscada),
+                curtidaRepository.existsByPublicacaoAndUsuario(publicacaoBuscada, logado)
+                );
+
+    }
 }
