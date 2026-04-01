@@ -1,5 +1,6 @@
 package net.burnbook.app.service;
 
+import net.burnbook.app.dto.usuario.FotoPerfilDTORequest;
 import net.burnbook.app.dto.usuario.UsuarioDTORequest;
 import net.burnbook.app.dto.usuario.UsuarioDTOResponse;
 import net.burnbook.app.infra.exception.model.ConflitoException;
@@ -8,6 +9,7 @@ import net.burnbook.app.infra.exception.model.RegraDeNegocioException;
 import net.burnbook.app.mapper.UsuarioMapper;
 import net.burnbook.app.model.Usuario;
 import net.burnbook.app.repository.UsuarioRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -18,10 +20,12 @@ public class UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
     private final UsuarioMapper usuarioMapper;
+    private final PasswordEncoder passwordEncoder;
 
-    public UsuarioService(UsuarioRepository usuarioRepository, UsuarioMapper usuarioMapper){
+    public UsuarioService(UsuarioRepository usuarioRepository, UsuarioMapper usuarioMapper, PasswordEncoder passwordEncoder){
         this.usuarioRepository = usuarioRepository;
         this.usuarioMapper = usuarioMapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public UsuarioDTOResponse cadastrar(UsuarioDTORequest usuarioDto){
@@ -43,6 +47,7 @@ public class UsuarioService {
         }
 
         Usuario usuarioDatabase = usuarioMapper.paraEntidade(usuarioDto);
+        usuarioDatabase.setSenha(passwordEncoder.encode(usuarioDto.senha()));
 
         return usuarioMapper.paraDto(usuarioRepository.save(usuarioDatabase));
     }
@@ -56,14 +61,14 @@ public class UsuarioService {
         return usuarioMapper.paraDto(usuarioBuscado);
     }
 
-    public UsuarioDTOResponse adicionarFotoPerfil(Long usuarioId, String fotoUrl){
+    public UsuarioDTOResponse adicionarFotoPerfil(Long usuarioId, FotoPerfilDTORequest fotoUrl){
 
         Usuario usuarioBuscado = usuarioRepository.findById(usuarioId)
                 .orElseThrow( () -> new EntidadeNaoEncontradaException("Usuário não encontrado"));
 
-        usuarioBuscado.setFotoPerfilUrl(fotoUrl);
+        usuarioBuscado.setFotoPerfilUrl(fotoUrl.fotoPerfilUrl());
 
-        return usuarioMapper.paraDto(usuarioBuscado);
+        return usuarioMapper.paraDto(usuarioRepository.save(usuarioBuscado));
     }
 
     public UsuarioDTOResponse buscarPorUsername(String username) {
@@ -71,5 +76,4 @@ public class UsuarioService {
                 .orElseThrow(() -> new EntidadeNaoEncontradaException("Usuário não encontrado"));
         return usuarioMapper.paraDto(usuario);
     }
-
 }

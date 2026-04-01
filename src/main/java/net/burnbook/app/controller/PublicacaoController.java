@@ -27,35 +27,36 @@ import java.time.LocalDate;
 public class PublicacaoController {
 
     private final PublicacaoService service;
-    private final UsuarioRepository usuarioRepository;
     private final ComentarioService comentarioService;
     public PublicacaoController (PublicacaoService service,
-                                 UsuarioRepository usuarioRepository,
                                  ComentarioService comentarioService) {
         this.service = service;
-        this.usuarioRepository = usuarioRepository;
         this.comentarioService = comentarioService;
     }
 
     @PostMapping("")
-    public ResponseEntity<PublicacaoDTOResponse> criarPublicacao (@Valid @RequestBody PublicacaoDTORequest publicacao) {
-        Usuario usuarioMockado = usuarioRepository.getById(100L);
+    public ResponseEntity<PublicacaoDTOResponse> criarPublicacao (
+            @Valid @RequestBody PublicacaoDTORequest publicacao,
+            @AuthenticationPrincipal(expression = "usuario") Usuario usuarioLogado
+    ) {
 
-        return ResponseEntity.ok(service.criar(publicacao, usuarioMockado));
+        return ResponseEntity.ok(service.criar(publicacao, usuarioLogado));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PublicacaoDTOResponse>  atualizarPublicacao ( @PathVariable Long id, @Valid @RequestBody PublicacaoDTORequest publicacaoDTORequest) {
-        Usuario usuarioMockado = usuarioRepository.getById(1L);
-
-        return ResponseEntity.ok(service.atualizar(id, publicacaoDTORequest, usuarioMockado));
+    public ResponseEntity<PublicacaoDTOResponse>  atualizarPublicacao (
+            @PathVariable Long id,
+            @Valid @RequestBody PublicacaoDTORequest publicacaoDTORequest,
+            @AuthenticationPrincipal(expression = "usuario") Usuario usuarioLogado
+    ) {
+        return ResponseEntity.ok(service.atualizar(id, publicacaoDTORequest, usuarioLogado));
     }
 
     @DeleteMapping("/{id}")
-    public void deletarPublicacao ( @PathVariable Long id) {
-        Usuario usuarioMockado = usuarioRepository.getById(1L);
+    public void deletarPublicacao ( @PathVariable Long id, @AuthenticationPrincipal(expression = "usuario") Usuario usuarioLogado
+    ) {
 
-        service.deletar(id, usuarioMockado);
+        service.deletar(id, usuarioLogado);
 
         ResponseEntity.ok("Removido com sucesso");
     }
