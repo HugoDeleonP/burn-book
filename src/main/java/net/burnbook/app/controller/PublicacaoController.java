@@ -5,6 +5,7 @@ import jakarta.validation.Valid;
 import net.burnbook.app.dto.publicacao.PublicacaoDTORequest;
 import net.burnbook.app.dto.publicacao.PublicacaoDTOResponse;
 import net.burnbook.app.model.Comentario;
+import net.burnbook.app.model.Publicacao;
 import net.burnbook.app.model.Usuario;
 import net.burnbook.app.repository.UsuarioRepository;
 import net.burnbook.app.service.ComentarioService;
@@ -69,4 +70,8 @@ public class PublicacaoController {
         return ResponseEntity.ok(comentarioService.listarComentariosRaizDaPublicacao(publicacaoId, PageRequest.of(page, size)));
    }
 
+   @GetMapping("/{id}")
+   public ResponseEntity<PublicacaoDTOResponse> listarPorId(@PathVariable Long id, @AuthenticationPrincipal(expression = "usuario") Usuario logado){
+        return ResponseEntity.ok(service.listarPorId(id, logado));
+   }
 }
