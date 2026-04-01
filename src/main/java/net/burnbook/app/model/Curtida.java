@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "comentario")
+@Table(name = "curtida")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

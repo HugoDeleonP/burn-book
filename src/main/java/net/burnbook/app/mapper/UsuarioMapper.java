@@ -15,7 +15,7 @@ public class UsuarioMapper {
                 usuarioDTORequest.dataNascimento(),
                 usuarioDTORequest.email(),
                 usuarioDTORequest.senha(),
-                usuarioDTORequest.CPF(),
+                usuarioDTORequest.cpf(),
                 usuarioDTORequest.fotoPerfilUrl()
         );
     }
